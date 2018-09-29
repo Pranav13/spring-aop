@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+	<bean id="customerService1" class="com.springaop.CustomerService1">
+		<property name="name" value="pranav" />
+		<property name="address" value="pune" />
+	</bean>
+
+	<bean id="myaop1" class="com.springaop.DeclarativeAOP"/>
+
+	<aop:config>
+		<aop:pointcut id="testPointCut"
+					  expression="execution(* com.springaop.CustomerService1.*(..))" />
+		<aop:aspect ref="myaop1">
+			<!-- Named pointcut to eliminate redundant pointcut definitions -->
+			<aop:before pointcut-ref="testPointCut" method="beforeService()"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
